@@ -1083,45 +1083,35 @@ function loadHomeLatestArticles() {
 }
 
 function loadHomeVideos() {
-    const container = document.getElementById('home-video-grid');
-    if (!container) return;
-    container.innerHTML = '';
+    const video = document.getElementById('home-featured-video');
+    if (!video) return;
     
-    const videoArticles = articlesCache
+    // 获取最新的带视频的文章
+    const videoArticle = articlesCache
         .filter(a => a.videoUrl)
         .slice()
-        .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
-        .slice(0, 6);
+        .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))[0];
     
-    if (videoArticles.length === 0) {
-        container.innerHTML = '<div class="empty-state">暂无视频内容</div>';
+    if (!videoArticle) {
+        // 如果没有视频，隐藏视频区域
+        const section = document.querySelector('.home-video-section');
+        if (section) section.style.display = 'none';
         return;
     }
     
-    videoArticles.forEach(article => {
-        const videoCard = document.createElement('div');
-        videoCard.className = 'video-card';
-        videoCard.innerHTML = `
-            <div class="video-thumbnail" onclick="showArticleDetail(${article.id})">
-                <video 
-                    class="video-thumbnail-player" 
-                    preload="metadata" 
-                    muted
-                    ${article.coverUrl ? `poster="${escapeHtmlAttr(article.coverUrl)}"` : ''}
-                >
-                    <source src="${escapeHtmlAttr(buildMediaProxyUrl(article.videoUrl))}" type="video/mp4">
-                </video>
-                <div class="video-play-overlay">
-                    <i class="fas fa-play"></i>
-                </div>
-            </div>
-            <div class="video-info">
-                <h4 class="video-title" onclick="showArticleDetail(${article.id})">${safeText(article.title)}</h4>
-                <div class="video-meta">${formatArticleMeta(article)}</div>
-            </div>
-        `;
-        container.appendChild(videoCard);
-    });
+    // 设置视频源
+    const source = video.querySelector('source');
+    if (source) {
+        source.src = buildMediaProxyUrl(videoArticle.videoUrl);
+    }
+    
+    // 设置封面
+    if (videoArticle.coverUrl) {
+        video.poster = videoArticle.coverUrl;
+    }
+    
+    // 重新加载视频
+    video.load();
 }
 
 function backToArticles() {

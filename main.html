@@ -43,11 +43,17 @@
                     </div>
                 </div>
                 <div class="home-video-section">
-                    <div class="section-head">
-                        <h2>精选视频</h2>
-                        <button class="btn btn-secondary btn-sm" onclick="showPage('articles')">更多视频</button>
+                    <div class="home-video-container">
+                        <video
+                            id="home-featured-video"
+                            class="featured-video-player"
+                            controls
+                            preload="metadata"
+                            poster="">
+                            <source src="" type="video/mp4">
+                            您的浏览器不支持视频播放。
+                        </video>
                     </div>
-                    <div class="home-video-grid" id="home-video-grid"></div>
                 </div>
 
                 <div class="stats-section">
