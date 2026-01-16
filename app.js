@@ -408,6 +408,13 @@ function escapeHtmlAttr(value) {
         .replace(/>/g, '&gt;');
 }
 
+function buildMediaProxyUrl(rawUrl) {
+    const u = String(rawUrl || '').trim();
+    if (!u) return '';
+    if (!/^https?:\/\//i.test(u)) return u;
+    return `/media?u=${encodeURIComponent(u)}`;
+}
+
 function readFileAsDataUrl(file) {
     return new Promise((resolve) => {
         if (!file || typeof File === 'undefined' || !(file instanceof File) || file.size === 0) {
@@ -1189,7 +1196,7 @@ function renderArticleDetail(articleId) {
         ? `
             <div style="margin: 0.75rem 0 1.25rem;">
                 <video controls preload="metadata" style="width: 100%; border-radius: 14px; border: 1px solid rgba(2, 6, 23, 0.12);" ${article.coverUrl ? `poster=\"${escapeHtmlAttr(article.coverUrl)}\"` : ''}>
-                    <source src="${escapeHtmlAttr(article.videoUrl)}" type="video/mp4" />
+                    <source src="${escapeHtmlAttr(buildMediaProxyUrl(article.videoUrl))}" type="video/mp4" />
                 </video>
             </div>
         `
