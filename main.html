@@ -43,15 +43,11 @@
                     </div>
                 </div>
                 <div class="home-video-section">
-                    <div class="home-video-inner">
-                        <video
-                            id="home-video"
-                            class="hero-video-player"
-                            controls
-                            preload="metadata"
-                            src="{{VIDEO_SOURCE_URL}}">
-                        </video>
+                    <div class="section-head">
+                        <h2>精选视频</h2>
+                        <button class="btn btn-secondary btn-sm" onclick="showPage('articles')">更多视频</button>
                     </div>
+                    <div class="home-video-grid" id="home-video-grid"></div>
                 </div>
 
                 <div class="stats-section">

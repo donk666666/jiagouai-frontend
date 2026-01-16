@@ -887,6 +887,7 @@ function loadPageData(pageName) {
     switch(pageName) {
         case 'home':
             loadHomeLatestArticles();
+            loadHomeVideos();
             break;
         case 'articles':
             initArticlesPage();
@@ -1079,6 +1080,48 @@ function loadHomeLatestArticles() {
         .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
         .slice(0, 3)
         .forEach(a => container.appendChild(renderArticleCard(a)));
+}
+
+function loadHomeVideos() {
+    const container = document.getElementById('home-video-grid');
+    if (!container) return;
+    container.innerHTML = '';
+    
+    const videoArticles = articlesCache
+        .filter(a => a.videoUrl)
+        .slice()
+        .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')))
+        .slice(0, 6);
+    
+    if (videoArticles.length === 0) {
+        container.innerHTML = '<div class="empty-state">暂无视频内容</div>';
+        return;
+    }
+    
+    videoArticles.forEach(article => {
+        const videoCard = document.createElement('div');
+        videoCard.className = 'video-card';
+        videoCard.innerHTML = `
+            <div class="video-thumbnail" onclick="showArticleDetail(${article.id})">
+                <video 
+                    class="video-thumbnail-player" 
+                    preload="metadata" 
+                    muted
+                    ${article.coverUrl ? `poster="${escapeHtmlAttr(article.coverUrl)}"` : ''}
+                >
+                    <source src="${escapeHtmlAttr(buildMediaProxyUrl(article.videoUrl))}" type="video/mp4">
+                </video>
+                <div class="video-play-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="video-info">
+                <h4 class="video-title" onclick="showArticleDetail(${article.id})">${safeText(article.title)}</h4>
+                <div class="video-meta">${formatArticleMeta(article)}</div>
+            </div>
+        `;
+        container.appendChild(videoCard);
+    });
 }
 
 function backToArticles() {
