@@ -383,6 +383,11 @@ const WP_CONFIG = {
     perPage: 10
 };
 
+const CONTENT_API_CONFIG = {
+    enabled: true,
+    baseUrl: ''
+};
+
 let articlesCache = mockArticles.slice();
 
 function renderImagePreview(imageUrl, title) {
@@ -1311,14 +1316,61 @@ async function fetchWordPressArticles() {
     return json.map(normalizeWpPostToArticle).filter(a => Number.isFinite(a.id));
 }
 
+function normalizeApiPostToArticle(post) {
+    if (!post || typeof post !== 'object') return null;
+    const id = Number(post.id);
+    if (!Number.isFinite(id)) return null;
+
+    const title = String(post.title || '').trim();
+    const content = String(post.content || '');
+    const excerpt = String(post.excerpt || '');
+    const category = String(post.category || '资讯');
+    const tags = Array.isArray(post.tags) ? post.tags.map(t => String(t || '').trim()).filter(Boolean) : [];
+    const date = String(post.date || '').slice(0, 10);
+    const videoUrl = post.videoUrl ? String(post.videoUrl) : '';
+    const coverUrl = post.coverUrl ? String(post.coverUrl) : '';
+
+    return {
+        id,
+        title,
+        category,
+        tags,
+        date,
+        readingMinutes: undefined,
+        source: 'Cloudflare',
+        excerpt,
+        content,
+        videoUrl,
+        coverUrl
+    };
+}
+
+async function fetchContentApiArticles() {
+    if (!CONTENT_API_CONFIG.enabled) return null;
+    const base = String(CONTENT_API_CONFIG.baseUrl || '').trim().replace(/\/$/, '');
+    const url = `${base || ''}/api/posts`;
+    const res = await fetch(url, { method: 'GET' });
+    if (!res.ok) throw new Error(`Content API fetch failed: ${res.status}`);
+    const json = await res.json();
+    const list = Array.isArray(json) ? json : Array.isArray(json?.items) ? json.items : [];
+    return list.map(normalizeApiPostToArticle).filter(Boolean);
+}
+
 async function ensureArticlesLoaded() {
     try {
-        const list = await fetchWordPressArticles();
-        if (list && list.length > 0) {
-            articlesCache = list;
-        } else {
-            articlesCache = mockArticles.slice();
+        const listFromApi = await fetchContentApiArticles();
+        if (listFromApi && listFromApi.length > 0) {
+            articlesCache = listFromApi;
+            return;
         }
+
+        const listFromWp = await fetchWordPressArticles();
+        if (listFromWp && listFromWp.length > 0) {
+            articlesCache = listFromWp;
+            return;
+        }
+
+        articlesCache = mockArticles.slice();
     } catch {
         articlesCache = mockArticles.slice();
     }
