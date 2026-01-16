@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 技术资讯自动生成与分发</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 顶部导航栏 -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-terminal"></i>
+                    <span>AutoTech Video</span>
+                </div>
+                <nav class="nav-menu">
+                    <a href="#home" class="nav-item active" data-page="home">首页</a>
+                    <a href="#articles" class="nav-item" data-page="articles">文章</a>
+                    <a href="#workflow" class="nav-item" data-page="workflow">工作流</a>
+                    <a href="#engine" class="nav-item" data-page="engine">发布引擎</a>
+                    <a href="#demo" class="nav-item" data-page="demo">演示</a>
+                </nav>
+                
+            </div>
+        </header>
+
+        <!-- 主内容区域 -->
+        <main class="main-content">
+            <!-- 首页 -->
+            <section id="home" class="page active">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1>AI 技术资讯自动生成与视频发布</h1>
+                        <p>基于 n8n 的全自动采集、AI 质检、TTS、剪辑对齐与多端分发</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="showPage('articles')">阅读文章</button>
+                            <button class="btn btn-secondary" onclick="showPage('workflow')">查看工作流</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="home-video-section">
+                    <div class="home-video-inner">
+                        <video
+                            id="home-video"
+                            class="hero-video-player"
+                            controls
+                            preload="metadata"
+                            src="{{VIDEO_SOURCE_URL}}">
+                        </video>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-number">0.0%</div>
+                            <div class="stat-label">错别字容忍度目标</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">30-60s</div>
+                            <div class="stat-label">短视频总结</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">08:00</div>
+                            <div class="stat-label">每日定时发布</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">3+</div>
+                            <div class="stat-label">分发渠道</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="features-section">
+                    <h2>准商用标准能力</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>质量控制流</h3>
+                            <p>工作流内置 AI 质检节点：文字逻辑严密、TTS 自然、视频画面与解说精准对齐</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-share-alt"></i>
+                            <h3>一次生成，多端分发</h3>
+                            <p>官网发布为长文，公众号发布为图文排版，短视频平台输出 30-60s 总结视频</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="home-latest-section">
+                    <div class="section-head">
+                        <h2>最新文章</h2>
+                        <button class="btn btn-secondary btn-sm" onclick="showPage('articles')">查看全部</button>
+                    </div>
+                    <div class="home-latest-grid" id="home-latest-articles"></div>
+                </div>
+            </section>
+
+            <!-- 文章列表 -->
+            <section id="articles" class="page">
+                <div class="content-shell">
+                    <div class="content-header">
+                        <h2>技术资讯</h2>
+                        <p>支持 Markdown 渲染（含代码高亮）、分类与标签体系、快速搜索与相关文章推荐</p>
+                    </div>
+
+                    <div class="content-toolbar">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input id="article-search" type="search" placeholder="搜索标题 / 标签 / 关键词…" autocomplete="off">
+                        </div>
+                        <div class="toolbar-actions">
+                            <button class="btn btn-secondary btn-sm" onclick="resetArticleFilters()">重置筛选</button>
+                        </div>
+                    </div>
+
+                    <div class="content-grid">
+                        <aside class="sidebar">
+                            <div class="sidebar-card">
+                                <div class="sidebar-title">分类</div>
+                                <div class="chip-group" id="category-chips"></div>
+                            </div>
+                            <div class="sidebar-card">
+                                <div class="sidebar-title">标签</div>
+                                <div class="chip-group" id="tag-chips"></div>
+                            </div>
+                        </aside>
+
+                        <div class="content-main">
+                            <div class="article-list" id="article-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 文章详情 -->
+            <section id="article" class="page">
+                <div class="article-shell">
+                    <div class="article-topbar">
+                        <button class="btn btn-secondary btn-sm" onclick="backToArticles()"><i class="fas fa-arrow-left"></i> 返回</button>
+                        <div class="article-share" id="article-share"></div>
+                    </div>
+
+                    <div class="article-header">
+                        <div class="article-title" id="article-title"></div>
+                        <div class="article-meta" id="article-meta"></div>
+                    </div>
+
+                    <div class="article-body markdown-body" id="article-body"></div>
+
+                    <div class="article-related">
+                        <div class="section-head">
+                            <h3>相关文章推荐</h3>
+                        </div>
+                        <div class="related-grid" id="related-articles"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 工作流 -->
+            <section id="workflow" class="page">
+                <div class="content-shell">
+                <div class="content-header">
+                    <h2>n8n 工作流：从资讯到视频</h2>
+                    <p>全自动内容生成 + AI 质检 + 对齐剪辑，目标是“零差错”的多模态交付</p>
+                </div>
+
+                <div class="workflow-grid">
+                    <div class="workflow-card">
+                        <div class="workflow-step">1</div>
+                        <div class="workflow-title">采集与去重</div>
+                        <div class="workflow-desc">RSS/网页/API 拉取技术资讯，按来源与主题去重、抽取结构化字段</div>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">2</div>
+                        <div class="workflow-title">脚本生成</div>
+                        <div class="workflow-desc">长文 + 短视频解说词分离输出，结构化分镜与时间轴</div>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">3</div>
+                        <div class="workflow-title">AI 质检节点</div>
+                        <div class="workflow-desc">检查错别字、事实冲突、时间轴一致性、画面-解说对齐与敏感词</div>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">4</div>
+                        <div class="workflow-title">TTS & 合成</div>
+                        <div class="workflow-desc">自然语调 TTS，自动匹配背景素材、字幕与镜头切换</div>
+                    </div>
+                    <div class="workflow-card">
+                        <div class="workflow-step">5</div>
+                        <div class="workflow-title">多端发布</div>
+                        <div class="workflow-desc">官网长文、公众号图文、抖音/TikTok 30-60s 总结视频，一次生成多端分发</div>
+                    </div>
+                </div>
+                </div>
+            </section>
+
+            <!-- 发布引擎 -->
+            <section id="engine" class="page">
+                <div class="content-shell">
+                    <div class="content-header">
+                        <h2>全自动化调度与发布引擎</h2>
+                        <p>定时任务、失败重试、告警通知与多渠道适配，确保发布可持续运行</p>
+                    </div>
+
+                    <div class="engine-grid">
+                        <div class="feature-card">
+                            <i class="fas fa-clock"></i>
+                            <h3>定时发布机制</h3>
+                            <p>支持在固定时段（如每日早 8 点）自动执行完整流：采集 → 生成 → 质检 → 发布</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-rss"></i>
+                            <h3>多渠道适配</h3>
+                            <p>同一内容源输出不同形态：官网长文 / 公众号图文 / 短视频平台总结视频</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-rotate"></i>
+                            <h3>异常补偿</h3>
+                            <p>接口失败自动重试与降级；对关键节点输出结构化日志与状态追踪</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-bell"></i>
+                            <h3>告警通知</h3>
+                            <p>可对接飞书/钉钉机器人：失败告警、超时告警、成功日报</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 供应商端 -->
+            <section id="supplier" class="page">
+                <div class="supplier-dashboard">
+                    <div class="dashboard-header">
+                        <h2>供应商管理后台</h2>
+                    </div>
+
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="supplier-onsale-count">45</div>
+                                <div class="stat-label">在售商品</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">1,234</div>
+                                <div class="stat-label">今日订单</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">¥89,456</div>
+                                <div class="stat-label">今日销售额</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-stats">
+                        <div class="stat-card clickable" onclick="openListModal('partners')" role="button" tabindex="0">
+                            <div class="stat-icon">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">128</div>
+                                <div class="stat-label">合作供应商</div>
+                            </div>
+                        </div>
+                        <div class="stat-card clickable" onclick="openListModal('agencyProducts')" role="button" tabindex="0">
+                            <div class="stat-icon">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">3,456</div>
+                                <div class="stat-label">代理商品</div>
+                            </div>
+                        </div>
+                        <div class="stat-card clickable" onclick="openListModal('customers')" role="button" tabindex="0">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">15,678</div>
+                                <div class="stat-label">终端客户</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="supplier-actions">
+                        <button class="btn btn-primary" onclick="showAddProductModal()">
+                            <i class="fas fa-plus"></i> 添加商品
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-chart-bar"></i> 数据分析
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-cog"></i> 设置
+                        </button>
+                    </div>
+
+                    <div class="products-management">
+                        <h3>商品管理</h3>
+                        <div class="products-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>商品图片</th>
+                                        <th>商品名称</th>
+                                        <th>价格</th>
+                                        <th>库存</th>
+                                        <th>销量</th>
+                                        <th>状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="supplier-products">
+                                    <!-- 动态加载商品 -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 渠道商端 -->
+            <section id="channel" class="page">
+                <div class="channel-dashboard">
+                    <div class="dashboard-header">
+                        <h2>渠道商管理后台</h2>
+                    </div>
+
+                    <div class="dashboard-stats">
+                        <div class="stat-card clickable" onclick="openListModal('partners')" role="button" tabindex="0">
+                            <div class="stat-icon">
+                                <i class="fas fa-store"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">128</div>
+                                <div class="stat-label">合作供应商</div>
+                            </div>
+                        </div>
+                        <div class="stat-card clickable" onclick="openListModal('agencyProducts')" role="button" tabindex="0">
+                            <div class="stat-icon">
+                                <i class="fas fa-box-open"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">3,456</div>
+                                <div class="stat-label">代理商品</div>
+                            </div>
+                        </div>
+                        <div class="stat-card clickable" onclick="openListModal('customers')" role="button" tabindex="0">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <div class="stat-number">15,678</div>
+                                <div class="stat-label">终端客户</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="channel-actions">
+                        <button class="btn btn-primary" onclick="openListModal('hotProducts')">
+                            <i class="fas fa-search"></i> 找爆品
+                        </button>
+                        <button class="btn btn-secondary" onclick="openListModal('leaders')">
+                            <i class="fas fa-user-friends"></i> 找团长
+                        </button>
+                        <button class="btn btn-secondary" onclick="openListModal('partners')">
+                            <i class="fas fa-handshake"></i> 找合作
+                        </button>
+                    </div>
+
+                    <div class="channel-quick-actions">
+                        <div class="quick-action" onclick="openListModal('myHotProducts')" role="button" tabindex="0">
+                            <div class="quick-icon"><i class="fas fa-fire"></i></div>
+                            <div class="quick-title">我的爆品</div>
+                            <div class="quick-desc">管理已代理的高转化商品</div>
+                        </div>
+                        <div class="quick-action" onclick="openCustomerService()" role="button" tabindex="0">
+                            <div class="quick-icon"><i class="fas fa-headset"></i></div>
+                            <div class="quick-title">联系客服</div>
+                            <div class="quick-desc">售前咨询、售后支持</div>
+                        </div>
+                        <div class="quick-action" onclick="openListModal('favorites')" role="button" tabindex="0">
+                            <div class="quick-icon"><i class="fas fa-heart"></i></div>
+                            <div class="quick-title">收藏的商品</div>
+                            <div class="quick-desc">随时查看与一键代理</div>
+                        </div>
+                        <div class="quick-action" onclick="openListModal('followedLeaders')" role="button" tabindex="0">
+                            <div class="quick-icon"><i class="fas fa-star"></i></div>
+                            <div class="quick-title">关注的团长</div>
+                            <div class="quick-desc">触达私域资源与渠道</div>
+                        </div>
+                    </div>
+
+                    <div class="leaders-section">
+                        <div class="leaders-header">
+                            <h3>热门团长</h3>
+                            <button class="btn btn-sm" onclick="openListModal('leaders')">查看全部</button>
+                        </div>
+                        <div class="leaders-grid" id="leaders-grid">
+                            <!-- 动态加载团长 -->
+                        </div>
+                    </div>
+
+                    <div class="recommended-products">
+                        <h3>推荐爆款</h3>
+                        <div class="products-grid" id="channel-products">
+                            <!-- 动态加载商品 -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 入驻申请 -->
+            <section id="register" class="page">
+                <div class="register-container">
+                    <div class="register-header">
+                        <h2>入驻申请</h2>
+                        <p>加入我们的爆款推荐平台，拓展您的业务</p>
+                    </div>
+
+                    <div class="onboard-banner onboard-banner--supplier" id="onboard-banner">
+                        <div class="onboard-banner-icon"><i class="fas fa-building"></i></div>
+                        <div class="onboard-banner-title" id="onboard-banner-title">供应商入驻</div>
+                        <div class="onboard-banner-subtitle" id="onboard-banner-subtitle">开启爆款供应链合作之旅</div>
+                    </div>
+
+                    <div class="onboard-steps" id="onboard-steps">
+                        <div class="step-item active">
+                            <div class="step-dot">1</div>
+                            <div class="step-label">基本信息</div>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step-item">
+                            <div class="step-dot">2</div>
+                            <div class="step-label">联系信息</div>
+                        </div>
+                        <div class="step-line"></div>
+                        <div class="step-item">
+                            <div class="step-dot">3</div>
+                            <div class="step-label">提交申请</div>
+                        </div>
+                    </div>
+
+                    <div class="register-tabs">
+                        <button class="tab-btn active" data-type="supplier">供应商入驻</button>
+                        <button class="tab-btn" data-type="channel">渠道商入驻</button>
+                    </div>
+
+                    <form class="register-form" id="supplier-form">
+                        <div class="register-card">
+                            <div class="register-card-title">企业基本信息</div>
+                            <div class="field-grid">
+                                <div class="form-group">
+                                    <label>企业名称 *</label>
+                                    <input type="text" name="enterpriseName" placeholder="请输入企业名称" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>企业类型 *</label>
+                                    <select name="enterpriseType" required>
+                                        <option value="" disabled selected>请选择企业类型</option>
+                                        <option value="manufacturer">生产制造</option>
+                                        <option value="brand">品牌方</option>
+                                        <option value="trade">贸易公司</option>
+                                        <option value="service">服务商</option>
+                                        <option value="other">其他</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>统一社会信用代码 *</label>
+                                    <input type="text" name="creditCode" placeholder="请输入18位统一社会信用代码" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>企业注册地址 *</label>
+                                    <input type="text" name="registeredAddress" placeholder="请输入企业注册地址" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>成立年限 *</label>
+                                    <select name="yearsEstablished" required>
+                                        <option value="" disabled selected>请选择成立年限</option>
+                                        <option value="0-1">1年以内</option>
+                                        <option value="1-3">1-3年</option>
+                                        <option value="3-5">3-5年</option>
+                                        <option value="5-10">5-10年</option>
+                                        <option value="10+">10年以上</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="register-card">
+                            <div class="register-card-title">联系人信息</div>
+                            <div class="field-grid">
+                                <div class="form-group">
+                                    <label>联系人姓名 *</label>
+                                    <input type="text" name="contactName" placeholder="请输入联系人姓名" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>联系人职务 *</label>
+                                    <input type="text" name="contactPosition" placeholder="如：招商主管/运营负责人" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>手机号码 *</label>
+                                    <input type="tel" name="contactPhone" placeholder="请输入手机号码" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>企业邮箱 *</label>
+                                    <input type="email" name="companyEmail" placeholder="请输入企业邮箱" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>微信号</label>
+                                    <input type="text" name="wechat" placeholder="用于后续对接（选填）">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions form-actions-sticky">
+                            <button type="submit" class="btn btn-primary">提交申请</button>
+                            <button type="reset" class="btn btn-secondary">重置</button>
+                        </div>
+                    </form>
+
+                    <form class="register-form" id="channel-form" style="display: none;">
+                        <div class="register-card">
+                            <div class="register-card-title">渠道类型</div>
+                            <input type="hidden" name="channelType" id="channelType" required>
+                            <div class="channel-type-grid" id="channel-type-grid">
+                                <button type="button" class="channel-type-card" data-value="community">
+                                    <div class="channel-type-icon"><i class="fas fa-home"></i></div>
+                                    <div class="channel-type-name">社区团购</div>
+                                    <div class="channel-type-desc">团长/团购群</div>
+                                </button>
+                                <button type="button" class="channel-type-card" data-value="private">
+                                    <div class="channel-type-icon"><i class="fas fa-users"></i></div>
+                                    <div class="channel-type-name">社群团购</div>
+                                    <div class="channel-type-desc">社群运营/私域主</div>
+                                </button>
+                                <button type="button" class="channel-type-card" data-value="live">
+                                    <div class="channel-type-icon"><i class="fas fa-video"></i></div>
+                                    <div class="channel-type-name">私域直播</div>
+                                    <div class="channel-type-desc">直播带货</div>
+                                </button>
+                                <button type="button" class="channel-type-card" data-value="ecommerce">
+                                    <div class="channel-type-icon"><i class="fas fa-store"></i></div>
+                                    <div class="channel-type-name">线上店铺</div>
+                                    <div class="channel-type-desc">淘宝/京东/抖音</div>
+                                </button>
+                                <button type="button" class="channel-type-card" data-value="offline">
+                                    <div class="channel-type-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                    <div class="channel-type-name">线下门店</div>
+                                    <div class="channel-type-desc">实体门店/连锁</div>
+                                </button>
+                                <button type="button" class="channel-type-card" data-value="other">
+                                    <div class="channel-type-icon"><i class="fas fa-ellipsis-h"></i></div>
+                                    <div class="channel-type-name">其他渠道</div>
+                                    <div class="channel-type-desc">请在备注说明</div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="register-card">
+                            <div class="register-card-title">渠道商基本信息</div>
+                            <div class="field-grid">
+                                <div class="form-group">
+                                    <label>企业名称 *</label>
+                                    <input type="text" name="enterpriseName" placeholder="请输入企业名称" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>渠道覆盖平台</label>
+                                    <input type="text" name="platform" placeholder="如：微信群/小红书/抖音/淘宝等">
+                                </div>
+                                <div class="form-group">
+                                    <label>月销售额</label>
+                                    <select name="monthlySales">
+                                        <option value="0-10">10万以下</option>
+                                        <option value="10-50">10-50万</option>
+                                        <option value="50-100">50-100万</option>
+                                        <option value="100+">100万以上</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="register-card">
+                            <div class="register-card-title">联系人信息</div>
+                            <div class="field-grid">
+                                <div class="form-group">
+                                    <label>联系人姓名 *</label>
+                                    <input type="text" name="contactName" placeholder="请输入联系人姓名" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>联系人职务 *</label>
+                                    <input type="text" name="contactPosition" placeholder="如：负责人/采购/运营" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>手机号码 *</label>
+                                    <input type="tel" name="contactPhone" placeholder="请输入手机号码" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>企业邮箱 *</label>
+                                    <input type="email" name="companyEmail" placeholder="请输入企业邮箱" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>微信号</label>
+                                    <input type="text" name="wechat" placeholder="用于后续对接（选填）">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions form-actions-sticky">
+                            <button type="submit" class="btn btn-primary">提交申请</button>
+                            <button type="reset" class="btn btn-secondary">重置</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- 演示页面 -->
+            <section id="demo" class="page">
+                <div class="demo-container">
+                    <div class="demo-header">
+                        <h2>演示</h2>
+                        <p>用一个示例文章展示：Markdown 渲染 + 代码高亮 + 相关文章 + 一键分享</p>
+                    </div>
+
+                    <div class="demo-sections">
+                        <div class="demo-section">
+                            <h3>快速开始</h3>
+                            <div class="demo-cards">
+                                <div class="demo-card" onclick="showPage('articles')">
+                                    <i class="fas fa-book-open"></i>
+                                    <h4>查看文章系统</h4>
+                                    <p>分类、标签、搜索与文章详情阅读体验</p>
+                                    <button class="btn btn-primary">打开</button>
+                                </div>
+                                <div class="demo-card" onclick="showPage('workflow')">
+                                    <i class="fas fa-diagram-project"></i>
+                                    <h4>查看 n8n 工作流</h4>
+                                    <p>从采集到发布的完整自动化流程</p>
+                                    <button class="btn btn-primary">打开</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="demo-section">
+                            <h3>功能演示</h3>
+                            <div class="feature-demo">
+                                <div class="demo-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h4>内容生成</h4>
+                                        <p>长文 + 视频解说词 + 分镜结构化输出</p>
+                                    </div>
+                                </div>
+                                <div class="demo-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h4>AI 质检</h4>
+                                        <p>错别字、逻辑冲突、时间轴对齐、敏感词与质量评分</p>
+                                    </div>
+                                </div>
+                                <div class="demo-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h4>自动发布</h4>
+                                        <p>每日定时执行：官网/公众号/短视频平台多端分发</p>
+                                    </div>
+                                </div>
+                                <div class="demo-step">
+                                    <div class="step-number">4</div>
+                                    <div class="step-content">
+                                        <h4>失败重试与告警</h4>
+                                        <p>接口失败自动重试，飞书/钉钉机器人告警通知</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="demo-section">
+                            <h3>演示数据</h3>
+                            <div class="demo-stats">
+                                <div class="demo-stat-item">
+                                    <div class="stat-label">今日生成文章</div>
+                                    <div class="stat-value">+12</div>
+                                </div>
+                                <div class="demo-stat-item">
+                                    <div class="stat-label">今日生成视频</div>
+                                    <div class="stat-value">+12</div>
+                                </div>
+                                <div class="demo-stat-item">
+                                    <div class="stat-label">质检拦截</div>
+                                    <div class="stat-value">+2</div>
+                                </div>
+                                <div class="demo-stat-item">
+                                    <div class="stat-label">多端发布成功</div>
+                                    <div class="stat-value">98%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="demo-section">
+                            <h3>自动生成视频</h3>
+                            <div class="demo-video-section">
+                                <div class="demo-video-left">
+                                    <video
+                                        id="auto-video"
+                                        class="demo-video-player"
+                                        controls
+                                        preload="metadata"
+                                        src="{{VIDEO_SOURCE_URL}}">
+                                    </video>
+                                </div>
+                                <div class="demo-video-right">
+                                    <div class="demo-video-label">当前视频 source_url</div>
+                                    <div class="demo-video-url" id="video-source-url">{{VIDEO_SOURCE_URL}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 产品详情模态框 -->
+        <div class="modal" id="product-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-product-name">商品详情</h3>
+                    <button class="modal-close" onclick="closeModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="modal-product-details">
+                    <!-- 动态加载商品详情 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 列表/详情通用模态框（合作供应商/代理商品/终端客户/团长等） -->
+        <div class="modal" id="list-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="list-modal-title">列表</h3>
+                    <button class="modal-close" onclick="closeListModal()">&times;</button>
+                </div>
+                <div class="modal-body" id="list-modal-body">
+                    <!-- 动态加载内容 -->
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加商品模态框 -->
+        <div class="modal" id="add-product-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>添加商品</h3>
+                    <button class="modal-close" onclick="closeAddProductModal()">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-product-form">
+                        <div class="form-group">
+                            <label>商品名称 *</label>
+                            <input type="text" name="product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>商品价格 *</label>
+                            <input type="number" name="product-price" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label>商品库存 *</label>
+                            <input type="number" name="product-stock" required>
+                        </div>
+                        <div class="form-group">
+                            <label>商品描述</label>
+                            <textarea name="product-description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>商品图片</label>
+                            <input type="file" name="product-image" accept="image/*">
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">添加商品</button>
+                            <button type="button" class="btn btn-secondary" onclick="closeAddProductModal()">取消</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
