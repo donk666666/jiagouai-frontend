@@ -245,135 +245,58 @@ const mockData = {
 const mockArticles = [
     {
         id: 1,
-        title: 'AI 药物发现初创公司 Converge Bio 完成 2500 万美元 A 轮融资',
+        title: '人工智能药物发现初创公司 Converge Bio 完成 2500 万美元 A 轮融资',
         category: 'AI 医疗',
         tags: ['AI 药物发现', '融资', 'Converge Bio'],
-        date: '2026-01-15',
+        date: '2026-01-16',
         readingMinutes: 4,
-        source: 'n8n 工作流自动生成',
-        excerpt: '人工智能药物发现初创公司 Converge Bio 宣布完成 2500 万美元 A 轮融资，由 Bessemer 领投，Meta、OpenAI 与 Wiz 高管参投，加速其 AI 驱动的药物研发平台以应对重大医疗挑战。',
-        content: `人工智能药物发现初创公司 Converge Bio 近日宣布，已完成 2500 万美元的 A 轮融资。本轮融资由 Bessemer Venture Partners 领投，并获得了来自 Meta、OpenAI 以及 Wiz 公司高管的额外支持。这笔资金将用于加速其 AI 驱动的药物研发平台发展，以应对当前医疗领域的重大挑战。`
+        source: '手动上传',
+        excerpt: '人工智能药物发现初创公司Converge Bio近日宣布，已完成2500万美元的A轮融资。本轮融资由Bessemer Venture Partners领投。',
+        content: `人工智能药物发现初创公司Converge Bio近日宣布，已完成2500万美元的A轮融资。本轮融资由Bessemer Venture Partners领投，并获得了来自Meta、OpenAI以及Wiz公司高管的额外支持。这笔资金将用于加速其AI驱动的药物研发平台建设，以探索新的治疗方法。`
     },
     {
         id: 2,
-        title: 'Mitti Labs 与大自然保护协会合作推广气候友好型水稻种植',
+        title: 'Mitti Labs 推广气候友好型水稻种植，AI 验证甲烷减排',
         category: '气候与农业',
         tags: ['Mitti Labs', '甲烷减排', '气候科技'],
-        date: '2026-01-15',
+        date: '2026-01-16',
         readingMinutes: 4,
-        source: 'n8n 工作流自动生成',
-        excerpt: 'Mitti Labs 正在印度推广气候友好型水稻种植方法，并利用自家 AI 技术验证甲烷排放减少量，帮助稻农在保障产量的同时降低温室气体排放。',
-        content: `气候变化给全球农业带来严峻挑战，而水稻种植产生的甲烷排放是重要温室气体来源之一。现在，一家名为 Mitti Labs 的初创公司正与大自然保护协会合作，在印度推广气候友好型水稻种植方法。该公司利用其人工智能技术，来验证甲烷排放的减少量。这一创新举措，旨在帮助稻农在保障产量的同时，降低对环境的影响，为应对气候变化提供科技解决方案。`
+        source: '手动上传',
+        excerpt: 'Mitti Labs正与大自然保护协会合作，在印度推广气候友好型水稻种植方法，利用AI技术验证甲烷排放减少量。',
+        content: `气候变化给全球农业带来严峻挑战，而水稻种植产生的甲烷排放是温室气体的重要来源之一。一家名为Mitti Labs的初创公司正与大自然保护协会合作，在印度推广气候友好型水稻种植方法。该公司利用其人工智能技术，来验证甲烷排放的减少量。通过精准的数据监测和分析，这项合作旨在帮助农民采用更可持续的耕作方式，在保障粮食生产的同时，积极应对气候变暖。`
     },
     {
         id: 3,
-        title: '始终开启麦克风的智能眼镜引发隐私担忧',
+        title: '前哈佛学生推出持续开启麦克风的智能眼镜引发隐私争议',
         category: '硬件与隐私',
         tags: ['智能眼镜', '隐私', '可穿戴设备'],
-        date: '2026-01-15',
-        readingMinutes: 3,
-        source: 'n8n 工作流自动生成',
-        excerpt: '两名前哈佛学生在为 Meta 雷朋眼镜开发面部识别后，如今又创办公司推出始终监听用户对话的智能眼镜，再次引发对隐私和数据安全的强烈讨论。',
-        content: `两名前哈佛学生，曾为 Meta 的雷朋眼镜开发面部识别应用并随意曝光他人信息，如今正创办一家初创公司，推出配备始终开启麦克风的智能眼镜。这款眼镜能持续监听并记录佩戴者的所有对话，引发了对隐私和数据安全的广泛担忧。`
+        date: '2026-01-16',
+        readingMinutes: 5,
+        source: '手动上传',
+        excerpt: '两名前哈佛学生创办公司推出内置持续开启麦克风的智能眼镜，引发隐私倡导者严重关切。',
+        content: `近日，两名前哈佛大学学生宣布创办一家初创公司，将推出内置持续开启麦克风的智能眼镜。此前，他们曾为Meta的雷朋眼镜开发面部识别应用，并因随意曝光他人信息而引发争议。这款新眼镜的设计理念是能够持续监听并记录佩戴者周围的所有对话，通过人工智能技术实时处理音频信息。支持者认为，此类设备在辅助记忆、实时翻译和情境感知方面具有潜力。然而，隐私倡导者对此表示严重关切，指出持续录音可能侵犯他人隐私，并在未经同意的情况下收集敏感数据。目前，该产品的具体发布时间、定价及数据处理政策尚未公布。`
     },
     {
         id: 4,
-        title: 'Obvio 拟用停车标志摄像头提升美国街道行人安全',
+        title: 'Obvio 在停车标志部署 AI 摄像头提升行人安全',
         category: '城市与交通',
         tags: ['Obvio', '交通安全', '城市 AI'],
-        date: '2026-01-15',
+        date: '2026-01-16',
         readingMinutes: 3,
-        source: 'n8n 工作流自动生成',
-        excerpt: '美国街道对行人极不友好，初创公司 Obvio 计划在停车标志处部署 AI 摄像头识别不安全驾驶行为，在不构建“全景监控社会”的前提下改善道路安全。',
-        content: `美国街道对行人来说极其危险。总部位于加利福尼亚州圣卡洛斯的一家初创公司 Obvio 认为，它可以通过在停车标志处安装摄像头来改变这一现状。该公司创始人表示，这一解决方案不会创造一个全景监控式的社会。这些摄像头利用人工智能技术，旨在识别出不安全的驾驶行为，从而提升道路安全。`
+        source: '手动上传',
+        excerpt: '初创公司Obvio在停车标志处安装AI摄像头识别不安全驾驶行为，提升道路安全且避免全景监控。',
+        content: `美国街道对行人来说极其危险。总部位于加利福尼亚州圣卡洛斯的一家初创公司Obvio认为，它可以通过在停车标志处安装摄像头来改变这一现状。公司创始人表示，这一解决方案不会创造一个全景监狱式的监控系统。这些摄像头利用人工智能技术，旨在识别出不安全的驾驶行为，从而提升道路安全。`
     },
     {
         id: 5,
-        title: 'YouTube 将 AI 列为 2025 年四大重点投资领域之一',
+        title: 'YouTube 大力投资 AI 创作者工具，语言翻译功能全面开放',
         category: '大厂动向',
         tags: ['YouTube', '生成式 AI', '创作者工具'],
-        date: '2026-01-15',
+        date: '2026-01-16',
         readingMinutes: 4,
-        source: 'n8n 工作流自动生成',
-        excerpt: 'YouTube CEO Neal Mohan 在年度公开信中强调 AI 对平台未来的重要性，重点投入创作者 AI 工具，包括视频创意、缩略图生成和语言翻译功能。',
-        content: `YouTube CEO Neal Mohan 在年度公开信中，将人工智能列为公司 2025 年的四大“重点投资领域”之一。他指出，YouTube 正在加大对创作者 AI 工具的投入，包括视频创意、缩略图和语言翻译等功能。其中，语言翻译功能将于本月向 YouTube 合作伙伴计划的所有创作者开放。`
-    },
-    {
-        id: 6,
-        title: 'Self Inspection 获 300 万美元融资，加速 AI 车辆检测',
-        category: 'AI 工业',
-        tags: ['Self Inspection', '车辆检测', '计算机视觉'],
-        date: '2026-01-15',
-        readingMinutes: 3,
-        source: 'n8n 工作流自动生成',
-        excerpt: '多家初创公司竞相用 AI 改造车辆检测流程，Self Inspection 宣称其服务在速度与成本上领先竞争对手，并获得 300 万美元资金支持。',
-        content: `多家初创公司正竞相让车辆检测变得更快速、更便捷、更便宜。总部位于圣地亚哥的初创公司 Self Inspection 认为，其 AI 驱动的服务已超越所有对手，并成功说服了外部投资者。成立于 2021 年的 Self Inspection 将于周四宣布，已筹集 300 万美元资金。`
-    },
-    {
-        id: 7,
-        title: 'Meta 在数据中心建设热潮中重新押注太阳能',
-        category: '能源与基础设施',
-        tags: ['Meta', '数据中心', '太阳能'],
-        date: '2026-01-15',
-        readingMinutes: 3,
-        source: 'n8n 工作流自动生成',
-        excerpt: '为支撑雄心勃勃的 AI 战略和数据中心扩张，Meta 宣布将再次大规模采用太阳能，缓解能源与碳排放压力。',
-        content: `Meta 公司宣布，在其数据中心建设热潮中，将再次转向太阳能。这一声明发布之际，Meta 首席执行官马克·扎克伯格正坚持公司雄心勃勃的人工智能战略，该战略将需要对数据中心进行大量资本投资。`
-    },
-    {
-        id: 8,
-        title: 'Salesforce 推出全新 AI 版 Slackbot，被称为“工作中的保时捷”',
-        category: 'AI 办公',
-        tags: ['Salesforce', 'Slackbot', '企业 AI'],
-        date: '2026-01-15',
-        readingMinutes: 6,
-        source: 'n8n 工作流自动生成',
-        excerpt: 'Salesforce 重构 Slackbot，将其打造为基于 Claude 的强大 AI 代理，可搜索企业数据、起草文档并执行操作，大幅提升员工效率。',
-        content: `Salesforce 于周二推出了完全重建的 Slackbot 版本，将其从一个简单的通知工具转变为一个功能强大的 AI 代理。这个新的 Slackbot 现已面向 Business+ 和 Enterprise+ 客户全面推出，能够搜索企业数据、起草文档并代表员工执行操作。Salesforce 联合创始人兼 Slack 首席技术官 Parker Harris 形容，旧版 Slackbot 像一辆小三轮车，而新版则像一辆保时捷。新版 Slackbot 基于 Anthropic 的 Claude 大语言模型构建，并具备强大的搜索能力，可以访问 Salesforce 记录、Google Drive 文件、日历数据和多年的 Slack 对话记录。Salesforce 内部测试显示，在 8 万名员工中，三分之二已尝试使用新版 Slackbot，其中 80% 的用户持续使用，内部满意度高达 96%。员工报告每周可节省 2 至 20 小时。YouTube 明星 MrBeast 的公司 Beast Industries 作为试点客户之一，其员工表示每天至少节省 90 分钟。Slack 首席产品官 Rob Seaman 强调，Slackbot 的优势在于其便捷性和上下文理解能力，它直接集成在 Slack 中，无需设置即可理解用户的工作。`
-    },
-    {
-        id: 9,
-        title: 'Anthropic 推出 Cowork，把 Claude Code 能力扩展到非技术用户',
-        category: 'AI 产品',
-        tags: ['Anthropic', 'Cowork', 'Claude Code'],
-        date: '2026-01-15',
-        readingMinutes: 6,
-        source: 'n8n 工作流自动生成',
-        excerpt: 'Anthropic 新功能 Cowork 将 Claude Code 的能力带到日常办公场景，主打“帮你完成非技术任务的 AI 助理”，对标微软 Copilot 等生产力工具。',
-        content: `人工智能公司 Anthropic 本周一发布了一项名为 Cowork 的新功能，将此前大获成功的 Claude Code 工具的能力扩展至非技术用户。据公司内部人士透露，团队仅用大约一周半时间就构建了整个功能，其中很大程度上使用了 Claude Code 本身。\n\nCowork 的推出标志着向主流用户提供实用 AI 智能体的竞赛进入一个重要转折点，使 Anthropic 不仅在对话式 AI 领域与 OpenAI 和谷歌竞争，更在快速增长的 AI 生产力工具市场与微软的 Copilot 展开直接较量。\n\n公司通过其官方 X 账号宣布：“Cowork 让你能够以类似开发者使用 Claude Code 的方式完成非技术任务。”该功能目前作为研究预览版，仅限每月 100 至 200 美元的 Claude Max 订阅用户通过 macOS 桌面应用程序使用。`
-    },
-    {
-        id: 10,
-        title: 'Nous Research 发布开源竞争性编程模型 NousCoder-14B',
-        category: '开源模型',
-        tags: ['NousCoder-14B', '开源模型', '竞争性编程'],
-        date: '2026-01-15',
-        readingMinutes: 7,
-        source: 'n8n 工作流自动生成',
-        excerpt: '由 Nous Research 推出的 NousCoder-14B 在 LiveCodeBench v6 中取得 67.87% 准确率，训练仅用四天，却在多项指标上对标甚至超越更大规模的专有系统。',
-        content: `人工智能编程助手领域迎来重磅开源新成员。由加密风投 Paradigm 支持的开源 AI 初创公司 Nous Research，本周一发布了全新的竞争性编程模型 NousCoder-14B。公司宣称，该模型在多项指标上匹配甚至超越了规模更大的专有系统，而其训练时间仅用了四天，动用了 48 块英伟达最新的 B200 图形处理器。\n\n这一模型的发布正值一个关键节点：竞争对手 Anthropic 推出的 Claude Code 编程工具自新年伊始便主导了社交媒体讨论，开发者们对其能力赞不绝口。\n\n与此形成对比的是，Nous Research 押注于基于可验证问题训练的开源替代方案能够缩小差距，并认为模型构建过程的透明度与原始能力同等重要。`
-    },
-    {
-        id: 11,
-        title: 'Claude Code 负责人工作流引发开发者社区“生产力革命”讨论',
-        category: '开发者实践',
-        tags: ['Claude Code', '开发流程', '工程效率'],
-        date: '2026-01-15',
-        readingMinutes: 7,
-        source: 'n8n 工作流自动生成',
-        excerpt: 'Anthropic 工程负责人 Boris Cherny 分享的终端与工作流配置在开发者圈引发热议，被视为“一个人拥有小型工程部门生产力”的样板。',
-        content: `当全球最先进编程智能体 Claude Code 的创造者开口，硅谷不仅倾听，还认真做笔记。过去一周，工程界都在疯狂解析 Anthropic 公司 Claude Code 负责人 Boris Cherny 在 X 平台上发布的一条长文。这起初只是他个人终端设置的分享，如今已演变成一场关于软件开发未来的病毒式宣言。\n\n这种兴奋源于一个悖论：Cherny 的工作流出奇地简单，却能让单个人类拥有相当于一个小型工程部门的产出能力。`
-    },
-    {
-        id: 12,
-        title: '美国 5 亿美元大型汽车经销园区并购案引发行业关注',
-        category: '产业投资',
-        tags: ['汽车零售', '并购', '商业地产'],
-        date: '2026-01-15',
-        readingMinutes: 3,
-        source: 'n8n 工作流自动生成',
-        excerpt: '位于美国俄亥俄州的一处大型汽车经销园区以约 5 亿美元成交，涵盖 14 个豪华及高端汽车品牌，引发汽车零售行业广泛关注。',
-        content: `近日，美国俄亥俄州一处大型汽车经销园区完成交易，总收购价值高达约 5 亿美元。该园区汇集了 14 个汽车品牌，其中大部分为豪华及高端品牌，包括法拉利等知名厂商。此次大规模并购案引发了汽车零售行业的广泛关注。`
+        source: '手动上传',
+        excerpt: 'YouTube CEO将AI列为2025年重点投资领域，语言翻译功能向所有创作者开放，引入年龄验证等AI更新。',
+        content: `YouTube首席执行官尼尔·莫汉在年度公开信中，将人工智能列为公司2025年的四大“重点押注”之一。他指出，YouTube正在大力投资创作者AI工具，包括视频创意生成、缩略图制作和语言翻译等功能。其中，语言翻译功能将于本月向YouTube合作伙伴计划的所有创作者全面开放，实现自动配音的扩展。此外，平台还将引入年龄验证技术等更多AI驱动更新，以提升内容安全性和用户体验。这些举措标志着YouTube正加速整合AI技术，赋能全球创作者生态。`
     }
 ];
 
